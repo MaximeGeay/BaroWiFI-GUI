@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-#define version "Barographe 1.0.2 QT5.13.2"
+#define version "Barographe 1.0.2 QT5.14.0"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
