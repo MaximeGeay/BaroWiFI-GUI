@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-#define version "Barographe 1.0.1 QT5.13.2"
+#define version "Barographe 1.0.2 QT5.13.2"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -496,8 +496,8 @@ void MainWindow::findTemperature(double dTemp)
 void MainWindow::decodeTrame(QString sTrame)
 {
     //Graphe::stData uneMesure;
-
-    if(dateEnCours.day()!=QDate::currentDate().day())
+    QDate currentDate=QDateTime::currentDateTimeUtc().date();
+    if(dateEnCours.day()!=currentDate.day())
     {
         //pourchangement de fichier;
         mRestart=true;
