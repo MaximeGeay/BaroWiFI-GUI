@@ -192,7 +192,7 @@ Graphe::stData XmlManager::dataAt(QString sRepArchi,QDateTime dtHeure)
     dtHeure.setTimeZone(QTimeZone::utc());
     QDate dDate=dtHeure.date();
     QDomDocument xmlDom;
-    QDateTime dtCourante;
+    //QDateTime dtCourante;
     bool bFound=false;
 
     qint64 deltaT=0;
@@ -283,7 +283,7 @@ Graphe::stData XmlManager::dataLast(QString sRepArchi,QDate dToday)
        uneMesure.temperature=Component.attribute("Temperature").toDouble();
        uneMesure.humidity=Component.attribute("Humidity").toDouble();
        uneMesure.dateHeure=QDateTime::fromString(Component.attribute("DateHeure"),"dd/MM/yyyy hh:mm:ss");
-
+       uneMesure.dateHeure.setTimeZone(QTimeZone::utc());
 
        }
        Component=Component.nextSibling().toElement();
@@ -294,8 +294,7 @@ Graphe::stData XmlManager::dataLast(QString sRepArchi,QDate dToday)
 
 Graphe::stData XmlManager::dataFirst(QString sRepArchi, QDate dToday)
 {
-    Graphe::stData uneMesure;
-
+   Graphe::stData uneMesure;
    QDomDocument xmlDom;
    QString xmlDoc=QString("%1/Baro_%2.xml").arg(sRepArchi).arg(dToday.toString("yyyyMMdd"));
    QFile f(xmlDoc);

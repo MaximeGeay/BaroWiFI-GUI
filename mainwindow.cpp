@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-#define version "Barographe 1.0.2 QT5.14.0"
+#define version "Barographe 1.0.3"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -63,6 +63,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->btn_WriteTimeoutWiFi,&QPushButton::clicked,this,&MainWindow::ecritTimeoutWiFi);
     QObject::connect(ui->btn_ReadBaudRate,&QPushButton::clicked,this,&MainWindow::litBaudrate);
     QObject::connect(ui->btn_WriteBaudRate,&QPushButton::clicked,this,&MainWindow::ecritBaudrate);
+    QObject::connect(ui->btn_ReadMDA,&QPushButton::clicked,this,&MainWindow::litMDAStatus);
+    QObject::connect(ui->btn_ReadUdpPortSec,&QPushButton::clicked,this,&MainWindow::litUdpPortSecCapteur);
+    QObject::connect(ui->btn_WriteMDA,&QPushButton::clicked,this,&MainWindow::ecritMDAStatus);
+    QObject::connect(ui->btn_WriteUdpPortSec,&QPushButton::clicked,this,&MainWindow::ecritUdpPortSecCapteur);
 }
 
 MainWindow::~MainWindow()
@@ -360,6 +364,31 @@ void MainWindow::ecritUdpPortCapteur()
     mSensor->sendMessage(sMsg);
 }
 
+void MainWindow::litUdpPortSecCapteur()
+{
+    QString sMsg=QString("$BARO,getUdpPortSec,\n");
+    mSensor->sendMessage(sMsg);
+}
+
+void MainWindow::ecritUdpPortSecCapteur()
+{
+    QString sMsg=QString("$BARO,setUdpPortSec,%1,\n").arg(ui->sp_UdpPortSec->value());
+    mSensor->sendMessage(sMsg);
+}
+
+void MainWindow::litMDAStatus()
+{
+    QString sMsg=QString("$BARO,getMDAStatus,\n");
+    mSensor->sendMessage(sMsg);
+}
+
+void MainWindow::ecritMDAStatus()
+{
+    QString sMsg=QString("$BARO,setMDAStatus,%1,\n").arg(ui->cb_MDAStatus->isChecked());
+    mSensor->sendMessage(sMsg);
+
+}
+
 void MainWindow::litPeriodeCapteur()
 {
     QString sMsg=QString("$BARO,getPeriod,\n");
@@ -496,6 +525,7 @@ void MainWindow::findTemperature(double dTemp)
 void MainWindow::decodeTrame(QString sTrame)
 {
     //Graphe::stData uneMesure;
+
     QDate currentDate=QDateTime::currentDateTimeUtc().date();
     if(dateEnCours.day()!=currentDate.day())
     {
@@ -575,6 +605,16 @@ void MainWindow::decodeTrame(QString sTrame)
         if(sTrame.section(",",1,1)=="UdpPort")
         {
             ui->sp_UdpPort->setValue(sTrame.section(",",2,2).toInt());
+        }
+        if(sTrame.section(",",1,1)=="UdpPortSec")
+        {
+            ui->sp_UdpPortSec->setValue(sTrame.section(",",2,2).toInt());
+        }
+        if(sTrame.section(",",1,1)=="MDAStatus")
+        {
+            bool bStatus=sTrame.section(",",2,2).toInt();
+            ui->cb_MDAStatus->setChecked(bStatus);
+
         }
         if(sTrame.section(",",1,1)=="period")
         {
@@ -760,7 +800,6 @@ void MainWindow::getXmlData(int nbFiles)
 double MainWindow::calculeTendance(QDateTime dtDebut,QDateTime dtFin)
 {
     Graphe::stData mesureDebut,mesureFin;
-
 
     qint64 deltaNow=dtFin.secsTo(QDateTime::currentDateTimeUtc());
 

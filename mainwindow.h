@@ -47,6 +47,10 @@ private slots:
     void ecritBroadcastCapteur();
     void litUdpPortCapteur();
     void ecritUdpPortCapteur();
+    void litUdpPortSecCapteur();
+    void ecritUdpPortSecCapteur();
+    void litMDAStatus();
+    void ecritMDAStatus();
     void litPeriodeCapteur();
     void ecritPeriodeCapteur();
     void litTimeoutWiFi();
