@@ -132,6 +132,9 @@ void fenConfig::initFen()
 
     ui->cb_Baudrate->setCurrentIndex(ui->cb_Baudrate->findText(mBaudrate));
 
+    ui->sp_UDPPort->setValue(mPortUDP);
+    ui->le_IpCapteur->setText(mIpSensor);
+
     initRepArchi(mRepArchi);
 
 }

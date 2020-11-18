@@ -13,16 +13,26 @@ public:
         Serie=0x00,UDP=0x01
     };
 
+    struct Parameters{
+        ConnexionType typeConnexion;
+        QString PortSerie,Baudrate,ipAddress;
+        int PortUDP=0;
+    };
+
     SensorDialog();
     ~SensorDialog();
     void setSensorType(ConnexionType bType);
     ConnexionType getSensorType();
+
+    void setParameters(Parameters param);
+    Parameters getParameters();
 
     bool setConnected();
     void setDisconnected();
     bool isConnected();
     bool sendMessage(QString sMessage);
     bool broadcastMessage(QString sMessage);
+
 
 signals:
     void dataReceived(QString);
@@ -32,18 +42,16 @@ private slots:
      void readData();
 private:
 
-    ConnexionType mTypeConnexion;
     QSerialPort* mSeriaPort;
     QUdpSocket* mUdpSocket;
-    QString mPortSerie;
-    QString mBaudrate;
-    QString mIpSensor;
+
+    Parameters mParam;
     QString mTrameEnCours;
     QString mTrameEntiere;
 
     void init();
 
-    int mPortUDP;
+
 };
 
 #endif // SENSORDIALOG_H

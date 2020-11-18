@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-#define version "Barographe 1.0.3"
+#define version "Barographe 1.0.4"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -125,7 +125,10 @@ void MainWindow::readData(QString sTrame)
 {
     ui->statusBar->showMessage(sTrame);
     if(mNbLignesLogData>5000)
+    {
         ui->te_Log->clear();
+        mNbLignesLogData=0;
+    }
 
     QString sLog=QString("%1: %2").arg(QDateTime::currentDateTime().toString("hh:mm:ss")).arg(sTrame);
     ui->te_Log->append(sLog);
@@ -597,6 +600,18 @@ void MainWindow::decodeTrame(QString sTrame)
         if(sTrame.section(",",1,1)=="IpAddress")
         {
             ui->le_IpSensor->setText(sTrame.section(",",2,2));
+            SensorDialog::Parameters param=mSensor->getParameters();
+            if(param.ipAddress!=ui->le_IpSensor->text())
+            {
+                int nRes=QMessageBox::question(this,"L'adresse IP a changé",QString("L'adresse IP du capteur est différente de celle enregistrée dans la fenêtre Préfèrences\n"
+                                                                            "Souhaitez-vous enregistrer l'adresse %1 comme adresse par défaut du capteur?").arg(ui->le_IpSensor->text()),QMessageBox::Yes|QMessageBox::No);
+
+                if(nRes==QMessageBox::Yes)
+                {
+                    param.ipAddress=ui->le_IpSensor->text();
+                    mSensor->setParameters(param);
+                }
+            }
         }
         if(sTrame.section(",",1,1)=="BroadcastAddress")
         {
@@ -605,6 +620,19 @@ void MainWindow::decodeTrame(QString sTrame)
         if(sTrame.section(",",1,1)=="UdpPort")
         {
             ui->sp_UdpPort->setValue(sTrame.section(",",2,2).toInt());
+
+            SensorDialog::Parameters param=mSensor->getParameters();
+            if(param.PortUDP!=ui->sp_UdpPort->value())
+            {
+                int nRes=QMessageBox::question(this,"Le port UDP principal a changé",QString("Le port UDP principal du capteur est différent de celui enregistré dans la fenêtre Préfèrences\n"
+                                                                            "Souhaitez-vous enregistrer le port %1 comme port par défaut du capteur?").arg(ui->sp_UdpPort->value()),QMessageBox::Yes|QMessageBox::No);
+
+                if(nRes==QMessageBox::Yes)
+                {
+                    param.PortUDP=ui->sp_UdpPort->value();
+                    mSensor->setParameters(param);
+                }
+            }
         }
         if(sTrame.section(",",1,1)=="UdpPortSec")
         {
