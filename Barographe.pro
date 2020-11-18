@@ -54,4 +54,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     icons_kde.qrc
 
+RC_ICONS = icon.ico
+
 QMAKE_CXXFLAGS += "-fno-sized-deallocation"
