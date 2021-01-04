@@ -1,11 +1,17 @@
 #ifndef SENSORDIALOG_H
 #define SENSORDIALOG_H
 
-
+#include <QWidget>
 #include <QUdpSocket>
 #include <QSerialPort>
 
-class SensorDialog :public QObject
+
+namespace Ui {
+class SensorDialog;
+}
+
+
+class SensorDialog :public QWidget
 {
     Q_OBJECT
 public:
@@ -15,11 +21,11 @@ public:
 
     struct Parameters{
         ConnexionType typeConnexion;
-        QString PortSerie,Baudrate,ipAddress;
+        QString PortSerie,Baudrate,ipAddress,Name;
         int PortUDP=0;
     };
 
-    SensorDialog();
+    explicit SensorDialog(QWidget *parent = nullptr);
     ~SensorDialog();
     void setSensorType(ConnexionType bType);
     ConnexionType getSensorType();
@@ -33,23 +39,31 @@ public:
     bool sendMessage(QString sMessage);
     bool broadcastMessage(QString sMessage);
 
+    void majInfo();
+    void initSensor(QString sName);
+    bool saveSensor(QString sName);
+
+    bool majConnecType();
+
 
 signals:
-    void dataReceived(QString);
+    void dataReceived(QString,QString);
     void errorString(QString);
 
 private slots:
      void readData();
+
 private:
 
-    QSerialPort* mSeriaPort;
+    Ui::SensorDialog *ui;
+    QSerialPort* mSerialPort;
     QUdpSocket* mUdpSocket;
 
     Parameters mParam;
     QString mTrameEnCours;
     QString mTrameEntiere;
 
-    void init();
+
 
 
 };

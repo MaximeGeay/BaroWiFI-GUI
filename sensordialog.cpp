@@ -1,22 +1,31 @@
 #include<QSettings>
 #include<QDebug>
+#include <QSerialPortInfo>
 
 #include "sensordialog.h"
+#include "ui_sensordialog.h"
 
-SensorDialog::SensorDialog()
+SensorDialog::SensorDialog(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::SensorDialog)
 {
-    mSeriaPort=new QSerialPort;
+    ui->setupUi(this);
+
+    mSerialPort=new QSerialPort;
     mUdpSocket=new QUdpSocket;
 
 
-    QObject::connect(mSeriaPort,&QSerialPort::readyRead,this,&SensorDialog::readData);
+    QObject::connect(mSerialPort,&QSerialPort::readyRead,this,&SensorDialog::readData);
     QObject::connect(mUdpSocket,&QUdpSocket::readyRead,this,&SensorDialog::readData);
+    QObject::connect(ui->rad_Udp,&QRadioButton::toggled,this,&SensorDialog::majConnecType);
+    QObject::connect(ui->rad_Serie,&QRadioButton::toggled,this,&SensorDialog::majConnecType);
 }
 
 SensorDialog::~SensorDialog()
 {
-    delete mSeriaPort;
+    delete mSerialPort;
     delete mUdpSocket;
+    delete ui;
 }
 
 void SensorDialog::setSensorType(SensorDialog::ConnexionType bType)
@@ -32,13 +41,29 @@ SensorDialog::ConnexionType SensorDialog::getSensorType()
 
 void SensorDialog::setParameters(SensorDialog::Parameters param)
 {
-    mParam=param;
-    QSettings settings ("Barographe","BaroConfig");
-    settings.setValue("PortName",mParam.PortSerie);
-    settings.setValue("Baudrate",mParam.Baudrate);
-    settings.setValue("ConnecType",mParam.typeConnexion);
-    settings.setValue("IpSensor",mParam.ipAddress);
-    settings.setValue("PortUDP",mParam.PortUDP);
+
+    qDebug()<<"setParameters"<<param.Name;
+    if(!param.Name.isEmpty())
+    {
+        mParam=param;
+        bool bType=false;
+        if(mParam.typeConnexion==Serie)
+            bType=false;
+        if(mParam.typeConnexion==UDP)
+            bType=true;
+
+         qDebug()<<"InitSensor"<<mParam.Name<<mParam.PortSerie<<mParam.typeConnexion;
+        ui->rad_Serie->setChecked(!bType);
+        ui->rad_Udp->setChecked(bType);
+        majConnecType();
+
+        ui->cb_Baudrate->setCurrentIndex(ui->cb_Baudrate->findText(mParam.Baudrate));
+        ui->sp_UDPPort->setValue(mParam.PortUDP);
+        ui->le_IpCapteur->setText(mParam.ipAddress);
+        saveSensor(mParam.Name);
+    }
+
+
 
 }
 
@@ -51,26 +76,26 @@ SensorDialog::Parameters SensorDialog::getParameters()
 
 bool SensorDialog::setConnected()
 {
-    init();
+    //init();
 
     bool bRes=false;
     if(mParam.typeConnexion==Serie)
      {
-        mSeriaPort->setPortName(mParam.PortSerie);
+        mSerialPort->setPortName(mParam.PortSerie);
         if(mParam.Baudrate=="4800")
-            mSeriaPort->setBaudRate(QSerialPort::Baud4800);
+            mSerialPort->setBaudRate(QSerialPort::Baud4800);
         if(mParam.Baudrate=="9600")
-            mSeriaPort->setBaudRate(QSerialPort::Baud9600);
+            mSerialPort->setBaudRate(QSerialPort::Baud9600);
         if(mParam.Baudrate=="19200")
-            mSeriaPort->setBaudRate(QSerialPort::Baud19200);
+            mSerialPort->setBaudRate(QSerialPort::Baud19200);
         if(mParam.Baudrate=="38400")
-            mSeriaPort->setBaudRate(QSerialPort::Baud38400);
+            mSerialPort->setBaudRate(QSerialPort::Baud38400);
         if(mParam.Baudrate=="115200")
-            mSeriaPort->setBaudRate(QSerialPort::Baud115200);
+            mSerialPort->setBaudRate(QSerialPort::Baud115200);
 
-        mSeriaPort->setParity(QSerialPort::NoParity);
-        mSeriaPort->setDataBits(QSerialPort::Data8);
-        bRes=mSeriaPort->open(QIODevice::ReadWrite);
+        mSerialPort->setParity(QSerialPort::NoParity);
+        mSerialPort->setDataBits(QSerialPort::Data8);
+        bRes=mSerialPort->open(QIODevice::ReadWrite);
         if(bRes)
         {
 
@@ -80,10 +105,10 @@ bool SensorDialog::setConnected()
         else
         {
 
-            if(mSeriaPort->error()==QSerialPort::DeviceNotFoundError)
+            if(mSerialPort->error()==QSerialPort::DeviceNotFoundError)
                 emit errorString("Port série introuvable");
             else {
-                if(mSeriaPort->error()==QSerialPort::PermissionError)
+                if(mSerialPort->error()==QSerialPort::PermissionError)
                     emit errorString("Problème de droits sur le port série");
                 else {
                     emit errorString("Echec d'ouverture du port série");
@@ -94,6 +119,7 @@ bool SensorDialog::setConnected()
 
     if(mParam.typeConnexion==UDP)
     {
+        qDebug()<<"Connexion"<<mParam.Name<<mParam.PortUDP;
         if(mUdpSocket->bind(QHostAddress::Any,mParam.PortUDP))
         {
              emit errorString(QString("Connecté au port UDP %1").arg(mParam.PortUDP));
@@ -114,7 +140,7 @@ bool SensorDialog::setConnected()
 void SensorDialog::setDisconnected()
 {
     if(mParam.typeConnexion==Serie)
-        mSeriaPort->close();
+        mSerialPort->close();
     if(mParam.typeConnexion==UDP)
         mUdpSocket->close();
 }
@@ -122,7 +148,7 @@ void SensorDialog::setDisconnected()
 bool SensorDialog::isConnected()
 {
     if(mParam.typeConnexion==Serie)
-        return mSeriaPort->isOpen();
+        return mSerialPort->isOpen();
 
     if(mParam.typeConnexion==UDP)
     {
@@ -146,11 +172,11 @@ bool SensorDialog::sendMessage(QString sMessage)
     }
     if(mParam.typeConnexion==Serie)
     {
-        qint64 result=mSeriaPort->write(sMessage.toLocal8Bit());
+        qint64 result=mSerialPort->write(sMessage.toLocal8Bit());
         if(result==-1)
         {
             emit errorString(QString("Message non envoyé : %1").arg(sMessage));
-            emit errorString(mSeriaPort->errorString());
+            emit errorString(mSerialPort->errorString());
             bRes=false;
         }
         else
@@ -169,6 +195,7 @@ bool SensorDialog::sendMessage(QString sMessage)
         QByteArray datagram = sMessage.toLocal8Bit();
 
        qint64 result=mUdpSocket->writeDatagram(datagram.data(), datagram.size(),QHostAddress(mParam.ipAddress),mParam.PortUDP);
+       qDebug()<<mParam.ipAddress<<mParam.PortUDP;
 
        if (result==-1)
        {
@@ -180,6 +207,7 @@ bool SensorDialog::sendMessage(QString sMessage)
        else
        {
            emit errorString(QString("Message envoyé sur le port %1 : %2").arg(mParam.PortUDP).arg(sMessage));
+           qDebug()<<QString("Message envoyé sur le port %1 : %2").arg(mParam.PortUDP).arg(sMessage);
            bRes=true;
 
        }
@@ -201,11 +229,11 @@ bool SensorDialog::broadcastMessage(QString sMessage)
 
     if(mParam.typeConnexion==Serie)
     {
-        qint64 result=mSeriaPort->write(sMessage.toLocal8Bit());
+        qint64 result=mSerialPort->write(sMessage.toLocal8Bit());
         if(result==-1)
         {
             emit errorString(QString("Message non envoyé : %1").arg(sMessage));
-            emit errorString(mSeriaPort->errorString());
+            emit errorString(mSerialPort->errorString());
             bRes=false;
         }
         else
@@ -243,15 +271,137 @@ bool SensorDialog::broadcastMessage(QString sMessage)
     return bRes;
 }
 
+void SensorDialog::majInfo()
+{
+    QStringList portList;
+    ui->cb_Serial->clear();
+
+    const auto infos = QSerialPortInfo::availablePorts();
+
+        for (const QSerialPortInfo &info : infos)
+        {
+            portList.append(info.portName());
+            this->ui->cb_Serial->addItem(info.portName());
+        }
+
+        QStringListIterator it (portList);
+        QString sUneLigne;
+        while(it.hasNext())
+        {
+            sUneLigne=it.next();
+            if(mParam.PortSerie==sUneLigne)
+                ui->cb_Serial->setCurrentIndex(ui->cb_Serial->findText(mParam.PortSerie));
+
+        }
+
+
+}
+
+void SensorDialog::initSensor(QString sName)
+{
+    QSettings settings;
+    mParam.PortSerie=settings.value(QString("%1/PortName").arg(sName),"").toString();
+    mParam.Baudrate=settings.value(QString("%1/BaudRate").arg(sName),4800).toString();
+    mParam.typeConnexion=static_cast<SensorDialog::ConnexionType>(settings.value(QString("%1/ConnecType").arg(sName),0).toBool());
+
+    mParam.ipAddress=settings.value(QString("%1/IpSensor").arg(sName)).toString();
+    mParam.PortUDP=settings.value(QString("%1/PortUDP").arg(sName),50000).toInt();
+    mParam.Name=sName;
+
+    qDebug()<<"InitSensor"<<mParam.Name<<mParam.PortSerie;
+
+    bool bType=false;
+    if(mParam.typeConnexion==Serie)
+        bType=false;
+    if(mParam.typeConnexion==UDP)
+        bType=true;
+
+     qDebug()<<"InitSensor"<<mParam.Name<<mParam.PortSerie<<mParam.typeConnexion;
+    ui->rad_Serie->setChecked(!bType);
+    ui->rad_Udp->setChecked(bType);
+    majConnecType();
+
+    ui->cb_Baudrate->setCurrentIndex(ui->cb_Baudrate->findText(mParam.Baudrate));
+    ui->sp_UDPPort->setValue(mParam.PortUDP);
+    ui->le_IpCapteur->setText(mParam.ipAddress);
+    majInfo();
+
+
+}
+
+bool SensorDialog::saveSensor(QString sName)
+{
+
+    QSettings settings;
+    bool bChanged=false;
+
+    if(ui->cb_Serial->currentText()!=mParam.PortSerie)
+    {
+        bChanged=true;
+    }
+    if(ui->cb_Baudrate->currentText()!=mParam.Baudrate)
+        bChanged=true;
+    if(ui->le_IpCapteur->text()!=mParam.ipAddress)
+        bChanged=true;
+    if(ui->sp_UDPPort->value()!=mParam.PortUDP)
+        bChanged=true;
+    ConnexionType bType=static_cast<ConnexionType>(majConnecType());
+    if(bType!=mParam.typeConnexion)
+        bChanged=true;
+
+    mParam.Name=sName;
+    mParam.PortSerie=ui->cb_Serial->currentText();
+    mParam.Baudrate=ui->cb_Baudrate->currentText();
+    mParam.typeConnexion=bType;
+    mParam.ipAddress=ui->le_IpCapteur->text();
+    mParam.PortUDP=ui->sp_UDPPort->value();
+
+
+    settings.setValue(QString("%1/PortName").arg(sName),mParam.PortSerie);
+    settings.setValue(QString("%1/Baudrate").arg(sName),mParam.Baudrate);
+    settings.setValue(QString("%1/ConnecType").arg(sName),mParam.typeConnexion);
+    settings.setValue(QString("%1/IpSensor").arg(sName),mParam.ipAddress);
+    settings.setValue(QString("%1/PortUDP").arg(sName),mParam.PortUDP);
+
+    qDebug()<<"SaveSensor"<<mParam.Name<<mParam.PortSerie;
+
+
+    return bChanged;
+}
+
+bool SensorDialog::majConnecType()
+{
+    bool bType =false;
+    if(ui->rad_Serie->isChecked())
+    {
+        bType=false;
+        mParam.typeConnexion=Serie;
+    }
+    if(ui->rad_Udp->isChecked())
+    {
+            bType=true;
+            mParam.typeConnexion=UDP;
+    }
+
+
+    ui->cb_Serial->setEnabled(!bType);
+    ui->cb_Baudrate->setEnabled(!bType);
+    ui->le_IpCapteur->setEnabled(bType);
+    ui->sp_UDPPort->setEnabled(bType);
+
+    return bType;
+
+}
+
 void SensorDialog::readData()
 {
     if(mParam.typeConnexion==Serie)
     {
         QByteArray cBuf;
 
-        for(int i=0;i<mSeriaPort->bytesAvailable();i++)
+        for(int i=0;i<mSerialPort->bytesAvailable();i++)
         {
-            cBuf=mSeriaPort->read(1);
+            cBuf=mSerialPort->read(1);
 
             if(cBuf=="$")
             {
@@ -259,7 +409,7 @@ void SensorDialog::readData()
             }
             else if (cBuf=="\n") {
                 QString sTrame=mTrameEnCours+"\n";
-                emit dataReceived(sTrame);
+                emit dataReceived(mParam.Name,sTrame);
 
                 mTrameEnCours="";
 
@@ -279,7 +429,7 @@ void SensorDialog::readData()
             datagram.resize(mUdpSocket->pendingDatagramSize());
             mUdpSocket-> readDatagram(datagram.data(),datagram.size()); // datagram.data est un char
             QString sTrame=datagram.data();  // convertion qbytearray en string
-            emit dataReceived(sTrame); // transmission du signal avec la trame recu
+            emit dataReceived(mParam.Name,sTrame); // transmission du signal avec la trame recu
 
 
 
@@ -287,18 +437,4 @@ void SensorDialog::readData()
     }
 }
 
-void SensorDialog::init()
-{
-    QSettings settings ("Barographe","BaroConfig");
-    mParam.PortSerie=settings.value("PortName","").toString();
-    mParam.Baudrate=settings.value("BaudRate",4800).toString();
-    bool bType=settings.value("ConnecType",0).toBool();
-    if(bType)
-       mParam.typeConnexion=SensorDialog::UDP;
-    else
-        mParam.typeConnexion=SensorDialog::Serie;
 
-    mParam.ipAddress=settings.value("IpSensor").toString();
-    mParam.PortUDP=settings.value("PortUDP",50000).toInt();
-
-}

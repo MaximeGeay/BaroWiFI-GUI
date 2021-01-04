@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-#define version "Barographe 1.0.4"
+#define version "Barographe 1.0.5"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     wGrfPression=new Graphe;
     wGrfTemperature=new Graphe;
     wGrfHumidity=new Graphe;
-    mSensor=new SensorDialog;
+
     mListeModelFiles=new QStandardItemModel;
     ui->gridLayoutPress->addWidget(wGrfPression);
     ui->gridLayoutTemp->addWidget(wGrfTemperature);
@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this->ui->actionDeconnecter2,SIGNAL(triggered()),this,SLOT(deconnecter()));
     QObject::connect(mSensor,&SensorDialog::dataReceived,this,&MainWindow::readData);
     QObject::connect(mSensor,&SensorDialog::errorString,this,&MainWindow::readError);
+    QObject::connect(mDisplay,&SensorDialog::dataReceived,this,&MainWindow::readData);
+    QObject::connect(mDisplay,&SensorDialog::errorString,this,&MainWindow::readError);
     QObject::connect(this->fenPref,&fenConfig::confChanged,this,&MainWindow::confChanged);
     QObject::connect(this->ui->comboEchelleTemps,&QComboBox::currentTextChanged,this,&MainWindow::selDuree);
     QObject::connect(this->ui->btn_Open,&QPushButton::clicked,this,&MainWindow::openFiles);
@@ -67,6 +69,30 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->btn_ReadUdpPortSec,&QPushButton::clicked,this,&MainWindow::litUdpPortSecCapteur);
     QObject::connect(ui->btn_WriteMDA,&QPushButton::clicked,this,&MainWindow::ecritMDAStatus);
     QObject::connect(ui->btn_WriteUdpPortSec,&QPushButton::clicked,this,&MainWindow::ecritUdpPortSecCapteur);
+    QObject::connect(ui->btn_ReadVaisala,&QPushButton::clicked,this,&MainWindow::litVaisalaStatus);
+    QObject::connect(ui->btn_WriteVaisala,&QPushButton::clicked,this,&MainWindow::ecritVaisalaStatus);
+
+
+    QObject::connect(ui->btn_ReadIpDisplay,&QPushButton::clicked,this,&MainWindow::litIpDisplay);
+    QObject::connect(ui->btn_ReadBroadcastDis,&QPushButton::clicked,this,&MainWindow::litBroadcastDisplay);
+    QObject::connect(ui->btn_ReadUdpPortDis,&QPushButton::clicked,this,&MainWindow::litUdpPortDisplay);
+    QObject::connect(ui->btn_WriteBroadcastDis,&QPushButton::clicked,this,&MainWindow::ecritBroadcastDisplay);
+    QObject::connect(ui->btn_WriteUdpPortDis,&QPushButton::clicked,this,&MainWindow::ecritUdpPortDisplay);
+    QObject::connect(ui->btn_Shutdown,&QPushButton::clicked,this,&MainWindow::shutdownDisplay);
+    QObject::connect(ui->btn_ReadUdpPortSecDis,&QPushButton::clicked,this,&MainWindow::litUdpPortSecDisplay);
+    QObject::connect(ui->btn_WriteUdpPortSecDis,&QPushButton::clicked,this,&MainWindow::ecritUdpPortSecDisplay);
+    QObject::connect(ui->btn_ReadTimeoutWiFiDis,&QPushButton::clicked,this,&MainWindow::litTimeoutWiFiDisplay);
+    QObject::connect(ui->btn_WriteTimeoutWiFiDis,&QPushButton::clicked,this,&MainWindow::ecritTimeoutWiFiDisplay);
+    QObject::connect(ui->btn_refresh,&QPushButton::clicked,this,&MainWindow::refreshDisplay);
+    QObject::connect(ui->btn_changeScale,&QPushButton::clicked,this,&MainWindow::displayChangeScale);
+    QObject::connect(ui->btn_getScale,&QPushButton::clicked,this,&MainWindow::displayGetScale);
+    QObject::connect(ui->btn_ReadScreenPeriod,&QPushButton::clicked,this,&MainWindow::litPeriodeDisplay);
+    QObject::connect(ui->btn_WriteScreenPeriode,&QPushButton::clicked,this,&MainWindow::ecritPeriodeDisplay);
+    QObject::connect(ui->btn_getRatio,&QPushButton::clicked,this,&MainWindow::litRecordRatio);
+    QObject::connect(ui->btn_setRatio,&QPushButton::clicked,this,&MainWindow::ecritRecordRatio);
+    QObject::connect(ui->btn_lireTypeGrf,&QPushButton::clicked,this,&MainWindow::litTypeGrf);
+    QObject::connect(ui->btn_ChangeGrf,&QPushButton::clicked,this,&MainWindow::ecritTypeGrf);
+
 }
 
 MainWindow::~MainWindow()
@@ -78,20 +104,34 @@ void MainWindow::connecter()
 {
     //init();
 
-
-    mSensor->setSensorType(mTypeConnec); 
+    bool bSensorConnected=false;
+    bool bDisplayConnected=false;
+   // mSensor->setSensorType(mTypeConnec);
     if (mSensor->setConnected())
 
     {
+        bSensorConnected=true;
 
-        ui->actionConnecter1->setEnabled(false);
-        ui->actionConnecter2->setEnabled(false);
-        ui->actionDeconnecter1->setEnabled(true);
-        ui->actionDeconnecter2->setEnabled(true);
         QDateTime dateHeure=QDateTime::currentDateTimeUtc();
         QString sFile=QString("%1/Baro_%2.xml").arg(mRepArchi).arg(dateHeure.toString("yyyyMMdd"));
         mManagerXml->initXml(sFile);
         dateEnCours=dateHeure.date();
+        ui->l_StatusSensor->setText("Capteur connecté");
+    }
+
+    if(mDisplay->setConnected())
+    {
+        bDisplayConnected=true;
+        ui->l_StatusDisplay->setText("Afficheur connecté");
+
+    }
+
+    if(bSensorConnected||bDisplayConnected)
+    {
+        ui->actionConnecter1->setEnabled(false);
+        ui->actionConnecter2->setEnabled(false);
+        ui->actionDeconnecter1->setEnabled(true);
+        ui->actionDeconnecter2->setEnabled(true);
     }
 
 
@@ -100,6 +140,9 @@ void MainWindow::connecter()
 void MainWindow::deconnecter()
 {
     mSensor->setDisconnected();
+    mDisplay->setDisconnected();
+    ui->l_StatusSensor->setText("Capteur non connecté");
+    ui->l_StatusDisplay->setText("Afficheur non connecté");
     ui->actionConnecter1->setEnabled(true);
     ui->actionConnecter2->setEnabled(true);
     ui->actionDeconnecter1->setEnabled(false);
@@ -121,7 +164,7 @@ void MainWindow::affichePref()
     this->fenPref->showFen(mSensor->isConnected());
 }
 
-void MainWindow::readData(QString sTrame)
+void MainWindow::readData(QString sSource, QString sTrame)
 {
     ui->statusBar->showMessage(sTrame);
     if(mNbLignesLogData>5000)
@@ -130,7 +173,7 @@ void MainWindow::readData(QString sTrame)
         mNbLignesLogData=0;
     }
 
-    QString sLog=QString("%1: %2").arg(QDateTime::currentDateTime().toString("hh:mm:ss")).arg(sTrame);
+    QString sLog=QString("%1 %2: %3").arg(QDateTime::currentDateTime().toString("hh:mm:ss")).arg(sSource).arg(sTrame);
     ui->te_Log->append(sLog);
     mNbLignesLogData++;
     decodeTrame(sTrame);
@@ -392,6 +435,18 @@ void MainWindow::ecritMDAStatus()
 
 }
 
+void MainWindow::litVaisalaStatus()
+{
+    QString sMsg=QString("$BARO,getVaisalaStatus,\n");
+    mSensor->sendMessage(sMsg);
+}
+
+void MainWindow::ecritVaisalaStatus()
+{
+    QString sMsg=QString("$BARO,setVaisalaStatus,%1,\n").arg(ui->cb_VaisalaStatus->isChecked());
+    mSensor->sendMessage(sMsg);
+}
+
 void MainWindow::litPeriodeCapteur()
 {
     QString sMsg=QString("$BARO,getPeriod,\n");
@@ -500,6 +555,128 @@ void MainWindow::reinitCapteur()
     }
 }
 
+void MainWindow::litIpDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,getIpAddress,\n");
+    mDisplay->broadcastMessage(sMsg);
+}
+
+void MainWindow::litBroadcastDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,getBroadcastAddress,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritBroadcastDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,setBroadcastAddress,%1,\n").arg(ui->le_broadcastDis->text());
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::litUdpPortDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,getUdpPort,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritUdpPortDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,setUdpPort,%1,\n").arg(ui->sp_UdpPortDis->value());
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::litUdpPortSecDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,getUdpPortSec,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritUdpPortSecDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,setUdpPortSec,%1,\n").arg(ui->sp_UdpPortSecDis->value());
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::litTimeoutWiFiDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,getTimeoutWiFi,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritTimeoutWiFiDisplay()
+{
+    int nTimeout=ui->sp_TimeoutWiFiDis->value();
+    QString sMsg=QString("$BARODISPLAY,setTimeoutWiFi,%1,\n").arg(nTimeout);
+    mDisplay->sendMessage(sMsg);
+}
+
+
+
+void MainWindow::shutdownDisplay()
+{
+    if(QMessageBox::question(this,QString("L'afficheur va s'éteindre"),"Etes-vous sûr de vouloir éteindre l'afficheur?")==QMessageBox::Yes)
+    {
+        QString sMsg=QString("$BARODISPLAY,shutdown,\n");
+        mDisplay->sendMessage(sMsg);
+    }
+}
+
+void MainWindow::displayChangeScale()
+{
+    QString sMsg=QString("$BARODISPLAY,setScale,%1,\n").arg(ui->cb_Scale->currentIndex());
+    QString sScale;
+
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::displayGetScale()
+{
+    QString sMsg=QString("$BARODISPLAY,getScale,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::refreshDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,refresh,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::litPeriodeDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,getPeriod,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritPeriodeDisplay()
+{
+    QString sMsg=QString("$BARODISPLAY,setPeriod,%1\n").arg(ui->sp_ScreenPeriod->value()*60); //conversion en seconde
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::litRecordRatio()
+{
+    QString sMsg=QString("$BARODISPLAY,getRecordRatio,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritRecordRatio()
+{
+    QString sMsg=QString("$BARODISPLAY,setRecordRatio,%1,\n").arg(ui->sp_RecordRatio->value());
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::litTypeGrf()
+{
+    QString sMsg=QString("$BARODISPLAY,getGrfType,\n");
+    mDisplay->sendMessage(sMsg);
+}
+
+void MainWindow::ecritTypeGrf()
+{
+    QString sMsg=QString("$BARODISPLAY,setGrfType,%1,\n").arg(ui->cb_TypeGrf->currentIndex());
+    mDisplay->sendMessage(sMsg);
+}
+
 void MainWindow::findPression(double dPress)
 {
     if(mSensor->isConnected())
@@ -537,7 +714,6 @@ void MainWindow::decodeTrame(QString sTrame)
         deconnecter();
         return;
     }
-    qDebug()<<sTrame;
 
     //"$IIXDR,P,1.01080,B,Barometer,C,26.90,C,Temperature,H,46.36,P,Humidity*48\r\n"
     if(sTrame.section(",",0,0)=="$IIXDR"&&sTrame.contains("B")&&sTrame.contains("C")&&sTrame.contains("H"))
@@ -644,6 +820,12 @@ void MainWindow::decodeTrame(QString sTrame)
             ui->cb_MDAStatus->setChecked(bStatus);
 
         }
+        if(sTrame.section(",",1,1)=="VaisalaStatus")
+        {
+            bool bStatus=sTrame.section(",",2,2).toInt();
+            ui->cb_VaisalaStatus->setChecked(bStatus);
+
+        }
         if(sTrame.section(",",1,1)=="period")
         {
             double dPeriod=sTrame.section(",",2,2).toDouble();
@@ -680,23 +862,98 @@ void MainWindow::decodeTrame(QString sTrame)
                 }
 
 
+    }
 
+    if(sTrame.section(",",0,0)=="$BARODISPLAY")
+    {
+        if(sTrame.section(",",1,1)=="IpAddress")
+        {
+            ui->le_IpSensorDis->setText(sTrame.section(",",2,2));
+            SensorDialog::Parameters param=mDisplay->getParameters();
+            if(param.ipAddress!=ui->le_IpSensorDis->text())
+            {
+                int nRes=QMessageBox::question(this,"L'adresse IP a changé",QString("L'adresse IP de l'afficheur est différente de celle enregistrée dans la fenêtre Préfèrences\n"
+                                                                            "Souhaitez-vous enregistrer l'adresse %1 comme adresse par défaut de l'afficheur?").arg(ui->le_IpSensorDis->text()),QMessageBox::Yes|QMessageBox::No);
 
+                if(nRes==QMessageBox::Yes)
+                {
+                    param.ipAddress=ui->le_IpSensorDis->text();
+                    mDisplay->setParameters(param);
+                }
+            }
+        }
+        if(sTrame.section(",",1,1)=="BroadcastAddress")
+        {
+            ui->le_broadcastDis->setText(sTrame.section(",",2,2));
+        }
+        if(sTrame.section(",",1,1)=="UdpPort")
+        {
+            ui->sp_UdpPortDis->setValue(sTrame.section(",",2,2).toInt());
+
+            SensorDialog::Parameters param=mDisplay->getParameters();
+            if(param.PortUDP!=ui->sp_UdpPortDis->value())
+            {
+                int nRes=QMessageBox::question(this,"Le port UDP principal a changé",QString("Le port UDP principal de l'afficheur est différent de celui enregistré dans la fenêtre Préfèrences\n"
+                                                                            "Souhaitez-vous enregistrer le port %1 comme port par défaut de l'afficheur?").arg(ui->sp_UdpPortDis->value()),QMessageBox::Yes|QMessageBox::No);
+
+                if(nRes==QMessageBox::Yes)
+                {
+                    param.PortUDP=ui->sp_UdpPortDis->value();
+                    mDisplay->setParameters(param);
+                }
+            }
+        }
+
+        if(sTrame.section(",",1,1)=="timeoutWiFi")
+        {
+            int nTimeout=sTrame.section(",",2,2).toInt();
+            ui->sp_TimeoutWiFiDis->setValue(nTimeout);
+        }
+        if(sTrame.section(",",1,1)=="UdpPortSec")
+        {
+            ui->sp_UdpPortSecDis->setValue(sTrame.section(",",2,2).toInt());
+        }
+
+        if(sTrame.section(",",1,1)=="period")
+        {
+            int nPeriod=sTrame.section(",",2,2).toInt();
+            nPeriod=nPeriod/60;//conversion en min
+            ui->sp_ScreenPeriod->setValue(nPeriod);
+        }
+        if(sTrame.section(",",1,1)=="scale")
+        {
+            int nScale=sTrame.section(",",2,2).toInt();
+
+            ui->cb_Scale->setCurrentIndex(nScale);
+        }
+        if(sTrame.section(",",1,1)=="ratio")
+        {
+            int nRatio=sTrame.section(",",2,2).toInt();
+
+            ui->sp_RecordRatio->setValue(nRatio);
+        }
+        if(sTrame.section(",",1,1)=="grfType")
+        {
+            ui->cb_TypeGrf->setCurrentIndex(sTrame.section(",",2,2).toInt());
+        }
 
     }
+
+
 
 
 }
 
 void MainWindow::init()
 {
-    QSettings settings ("Barographe","BaroConfig");
-    mPortName=settings.value("PortName","").toString();
-    bool bType=settings.value("ConnecType",0).toBool();
-    if(bType)
-        mTypeConnec=SensorDialog::UDP;
-    else
-        mTypeConnec=SensorDialog::Serie;
+    QSettings settings;
+
+
+    QList<SensorDialog*> list;
+    list=fenPref->getSensors();
+    mSensor=list.first();
+    mDisplay=list.last();
+
     mRepArchi=settings.value("RepArchi",QStandardPaths::locate(QStandardPaths::HomeLocation,QString(),QStandardPaths::LocateDirectory)+"Barographe_Datas").toString();
     mDuree=settings.value("Duree",3).toInt();
 

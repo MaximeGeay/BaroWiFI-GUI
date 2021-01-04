@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>847</width>
-    <height>697</height>
+    <width>760</width>
+    <height>716</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,46 +19,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="3">
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="l_Pression">
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Pression :</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="0" column="2">
      <widget class="QLabel" name="l_Tendance">
       <property name="font">
@@ -70,16 +30,6 @@
       </property>
       <property name="text">
        <string>Tendance :</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4" colspan="3">
-     <widget class="QLabel" name="l_Heure">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -96,115 +46,10 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="6">
-     <widget class="QLabel" name="l_Humidity">
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Humidité:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QComboBox" name="comboEchelleTemps">
-      <item>
-       <property name="text">
-        <string>1 heure</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>3 heures</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>6 heures</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>12 heures</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>24 heures</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>2 jours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>3 jours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>4 jours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>1 semaine</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>2 semaines</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>1 mois</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Total des fichiers</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QLabel" name="l_Temperature">
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Température:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="1" column="0" colspan="7">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -300,326 +145,15 @@
        <attribute name="title">
         <string>Configuration capteur</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_13">
-        <item row="2" column="1">
-         <widget class="QGroupBox" name="groupBox_5">
-          <property name="title">
-           <string>Liaison Serie</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0" colspan="2">
-            <widget class="QPushButton" name="btn_ReadBaudRate">
-             <property name="text">
-              <string>Lire BaudRate</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="btn_WriteBaudRate">
-             <property name="text">
-              <string>Ecrire BaudRate</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>BaudRate</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QComboBox" name="cb_Baudrate">
-             <item>
-              <property name="text">
-               <string>4800</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>9600</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>19200</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>38400</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>115200</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string>Offset Pression</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_7">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="btn_ReadPressure">
-             <property name="text">
-              <string>Lire Offset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="btn_WritePressure">
-             <property name="text">
-              <string>Ecrire Offset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Offset Pression :</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="spPression">
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="decimals">
-              <number>1</number>
-             </property>
-             <property name="minimum">
-              <double>-999.899999999999977</double>
-             </property>
-             <property name="maximum">
-              <double>999.899999999999977</double>
-             </property>
-             <property name="singleStep">
-              <double>0.100000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="lPressionAttendue">
-             <property name="text">
-              <string>Pression recherchée:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="spPressionRec">
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="decimals">
-              <number>1</number>
-             </property>
-             <property name="minimum">
-              <double>950.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>1049.900000000000091</double>
-             </property>
-             <property name="singleStep">
-              <double>1.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>1015.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>67</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="5" column="0" colspan="2">
-         <spacer name="horizontalSpacer_7">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>290</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="0">
-         <widget class="QGroupBox" name="groupBox_4">
-          <property name="title">
-           <string>Période du capteur</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="btn_ReadPeriod">
-             <property name="text">
-              <string>Lire période</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="btn_WritePeriod">
-             <property name="text">
-              <string>Ecrire période</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>Période (s)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="sp_Periode">
-             <property name="decimals">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <double>99999.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QGroupBox" name="groupBox_6">
-          <property name="title">
-           <string>Trames $IIMDA (ancienne génération)</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_11">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="btn_ReadMDA">
-             <property name="text">
-              <string>Lire</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="btn_WriteMDA">
-             <property name="text">
-              <string>Ecrire</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QCheckBox" name="cb_MDAStatus">
-             <property name="text">
-              <string>Trame $IIMDA diffusée</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QPushButton" name="btn_reinit">
+       <layout class="QGridLayout" name="gridLayout_17">
+        <item row="0" column="0">
+         <widget class="QLabel" name="l_StatusSensor">
           <property name="text">
-           <string>Reinitialiser le capteur</string>
+           <string>Capteur non connecté</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="title">
-           <string>Offset Température</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="btn_ReadTemperature">
-             <property name="text">
-              <string>Lire Offset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="btn_WriteTemperature">
-             <property name="text">
-              <string>Ecrire Offset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>Offset Température :</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="spTemperature">
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="decimals">
-              <number>1</number>
-             </property>
-             <property name="minimum">
-              <double>-99.900000000000006</double>
-             </property>
-             <property name="maximum">
-              <double>99.900000000000006</double>
-             </property>
-             <property name="singleStep">
-              <double>0.100000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="lPressionAttendue_2">
-             <property name="text">
-              <string>Temperature recherchée:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="spTempRec">
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="decimals">
-              <number>1</number>
-             </property>
-             <property name="minimum">
-              <double>-100.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>100.000000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>1.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>20.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="0" column="2" rowspan="4">
+        <item row="1" column="3" rowspan="4">
          <widget class="QGroupBox" name="groupBox_3">
           <property name="title">
            <string>Réseau</string>
@@ -912,9 +446,909 @@
           </layout>
          </widget>
         </item>
+        <item row="3" column="0">
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="title">
+           <string>Période du capteur</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_ReadPeriod">
+             <property name="text">
+              <string>Lire période</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btn_WritePeriod">
+             <property name="text">
+              <string>Ecrire période</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Période (s)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="sp_Periode">
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <double>99999.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QGroupBox" name="groupBox_5">
+          <property name="title">
+           <string>Liaison Serie</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_ReadBaudRate">
+             <property name="text">
+              <string>Lire BaudRate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="btn_WriteBaudRate">
+             <property name="text">
+              <string>Ecrire BaudRate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>BaudRate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QComboBox" name="cb_Baudrate">
+             <item>
+              <property name="text">
+               <string>4800</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>9600</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>19200</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>38400</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>115200</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="title">
+           <string>Trames $IIMDA (ancienne génération)</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_ReadMDA">
+             <property name="text">
+              <string>Lire</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btn_WriteMDA">
+             <property name="text">
+              <string>Ecrire</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QCheckBox" name="cb_MDAStatus">
+             <property name="text">
+              <string>Trame $IIMDA diffusée</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QGroupBox" name="groupBox_9">
+          <property name="title">
+           <string>Trames Vaisala HMP155</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_ReadVaisala">
+             <property name="text">
+              <string>Lire</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btn_WriteVaisala">
+             <property name="text">
+              <string>Ecrire</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QCheckBox" name="cb_VaisalaStatus">
+             <property name="text">
+              <string>Trame Vaisala diffusée</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>(Port série uniquement)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="5" column="3">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>67</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="0" colspan="3">
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>290</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="3">
+         <widget class="QPushButton" name="btn_reinit">
+          <property name="text">
+           <string>Reinitialiser le capteur</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Offset Pression</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_ReadPressure">
+             <property name="text">
+              <string>Lire Offset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btn_WritePressure">
+             <property name="text">
+              <string>Ecrire Offset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Offset Pression :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="spPression">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="minimum">
+              <double>-999.899999999999977</double>
+             </property>
+             <property name="maximum">
+              <double>999.899999999999977</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lPressionAttendue">
+             <property name="text">
+              <string>Pression recherchée:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="spPressionRec">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="minimum">
+              <double>950.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>1049.900000000000091</double>
+             </property>
+             <property name="singleStep">
+              <double>1.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>1015.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Offset Température</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_ReadTemperature">
+             <property name="text">
+              <string>Lire Offset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btn_WriteTemperature">
+             <property name="text">
+              <string>Ecrire Offset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Offset Température :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="spTemperature">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="minimum">
+              <double>-99.900000000000006</double>
+             </property>
+             <property name="maximum">
+              <double>99.900000000000006</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lPressionAttendue_2">
+             <property name="text">
+              <string>Temperature recherchée:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="spTempRec">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="minimum">
+              <double>-100.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>100.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>1.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>20.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Configuration afficheur</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_15">
+        <item row="3" column="1" colspan="4">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>489</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" rowspan="2">
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="minimumSize">
+           <size>
+            <width>405</width>
+            <height>391</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Réseau</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_14">
+           <item row="7" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_ReadBroadcastDis">
+             <property name="text">
+              <string>Lire l'adresse broadcast</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="2">
+            <widget class="QPushButton" name="btn_WriteUdpPortDis">
+             <property name="maximumSize">
+              <size>
+               <width>170</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Ecrire Port UDP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_ReadUdpPortSecDis">
+             <property name="text">
+              <string>Lire Port UDP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0" colspan="3">
+            <widget class="Line" name="line_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="3">
+            <widget class="Line" name="line_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="btn_WriteTimeoutWiFiDis">
+             <property name="maximumSize">
+              <size>
+               <width>170</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Ecrire timeout WiFi</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="2">
+            <widget class="QLineEdit" name="le_broadcastDis">
+             <property name="maximumSize">
+              <size>
+               <width>167</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="inputMask">
+              <string>999.999.999.999</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="2">
+            <widget class="QPushButton" name="btn_WriteBroadcastDis">
+             <property name="maximumSize">
+              <size>
+               <width>169</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Ecrire l'adresse broadcast</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>Timeout WiFi (s)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLineEdit" name="le_IpSensorDis">
+             <property name="maximumSize">
+              <size>
+               <width>167</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="inputMask">
+              <string>999.999.999.999</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="3">
+            <widget class="Line" name="line_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="0">
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Port :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="2">
+            <widget class="QSpinBox" name="sp_UdpPortDis">
+             <property name="maximumSize">
+              <size>
+               <width>167</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>50000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_ReadUdpPortDis">
+             <property name="text">
+              <string>Lire Port UDP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0" colspan="3">
+            <widget class="Line" name="line_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="2">
+            <widget class="QPushButton" name="btn_WriteUdpPortSecDis">
+             <property name="maximumSize">
+              <size>
+               <width>170</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Ecrire Port UDP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Broadcast :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_14">
+             <property name="text">
+              <string>Adresse capteur :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_ReadIpDisplay">
+             <property name="text">
+              <string>Lire l'adresse IP de l'afficheur</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0" colspan="3">
+            <widget class="QLabel" name="label_15">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Port UDP principal : configuration et données</string>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="0" colspan="3">
+            <widget class="QLabel" name="label_16">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Port UDP secondaire : données seulement</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QSpinBox" name="sp_TimeoutWiFiDis">
+             <property name="maximumSize">
+              <size>
+               <width>167</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximum">
+              <number>999</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_ReadTimeoutWiFiDis">
+             <property name="text">
+              <string>Lire timeout WiFi</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="2">
+            <widget class="QSpinBox" name="sp_UdpPortSecDis">
+             <property name="maximumSize">
+              <size>
+               <width>167</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>10110</number>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="0" colspan="2">
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>Port</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="3">
+            <widget class="Line" name="line_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="l_StatusDisplay">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Afficheur non connecté</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" rowspan="2" colspan="4">
+         <widget class="QGroupBox" name="groupBox_8">
+          <property name="title">
+           <string>Réglages</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_16">
+           <item row="14" column="0">
+            <widget class="QPushButton" name="btn_getRatio">
+             <property name="text">
+              <string>Lire ratio</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1" colspan="4">
+            <widget class="QPushButton" name="btn_refresh">
+             <property name="text">
+              <string>Rafraichir l'écran</string>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="0">
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>Enregistrement d'une trame sur:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="0" colspan="5">
+            <widget class="QPushButton" name="btn_Shutdown">
+             <property name="text">
+              <string>Eteindre l'afficheur</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Type de graphe</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1" colspan="2">
+            <widget class="QSpinBox" name="sp_ScreenPeriod">
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Rafraichissement</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QComboBox" name="cb_Scale">
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>1 heure</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>3 heures</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>6 heures</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>12 heures</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>24 heures</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2 jours</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>3 jours</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4 jours</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>5 jours</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="5">
+            <widget class="Line" name="line_14">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="btn_getScale">
+             <property name="text">
+              <string>Lire échelle</string>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="1" colspan="2">
+            <widget class="QSpinBox" name="sp_RecordRatio">
+             <property name="maximum">
+              <number>999</number>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="1" colspan="4">
+            <widget class="QPushButton" name="btn_setRatio">
+             <property name="text">
+              <string>Ecrire ratio</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QPushButton" name="btn_ReadScreenPeriod">
+             <property name="text">
+              <string>Lire période</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Période de rafraichissement (min)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1" colspan="4">
+            <widget class="QPushButton" name="btn_WriteScreenPeriode">
+             <property name="text">
+              <string>Ecrire période</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>Echelle</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QPushButton" name="btn_lireTypeGrf">
+             <property name="text">
+              <string>Lire type</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="0" colspan="5">
+            <widget class="Line" name="line_12">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>Enregistrement</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="0" colspan="5">
+            <widget class="Line" name="line_13">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="5">
+            <widget class="Line" name="line_11">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" colspan="4">
+            <widget class="QPushButton" name="btn_changeScale">
+             <property name="text">
+              <string>Changer échelle</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QComboBox" name="cb_TypeGrf">
+             <item>
+              <property name="text">
+               <string>Pression</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Température</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Humidité</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="6" column="1" colspan="4">
+            <widget class="QPushButton" name="btn_ChangeGrf">
+             <property name="text">
+              <string>Changer graphe</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_7">
        <attribute name="title">
         <string>Log réception</string>
        </attribute>
@@ -950,6 +1384,161 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="3">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="2">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLabel" name="l_Temperature">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Température:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QComboBox" name="comboEchelleTemps">
+      <item>
+       <property name="text">
+        <string>1 heure</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>3 heures</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>6 heures</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>12 heures</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>24 heures</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2 jours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>3 jours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>4 jours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>1 semaine</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2 semaines</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>1 mois</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Total des fichiers</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="6">
+     <widget class="QLabel" name="l_Humidity">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Humidité:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4" colspan="3">
+     <widget class="QLabel" name="l_Heure">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="l_Pression">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Pression :</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -957,7 +1546,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>847</width>
+     <width>760</width>
      <height>21</height>
     </rect>
    </property>

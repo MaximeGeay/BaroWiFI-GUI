@@ -44,7 +44,8 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     fenconfig.ui \
-    graphe.ui
+    graphe.ui \
+    sensordialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -30,7 +30,7 @@ private slots:
     void connecter(void);
     void deconnecter(void);
     void affichePref();
-    void readData(QString sTrame);
+    void readData(QString sSource,QString sTrame);
     void readError(QString sError);
     void confChanged();
     void selDuree(QString sText);
@@ -51,6 +51,8 @@ private slots:
     void ecritUdpPortSecCapteur();
     void litMDAStatus();
     void ecritMDAStatus();
+    void litVaisalaStatus();
+    void ecritVaisalaStatus();
     void litPeriodeCapteur();
     void ecritPeriodeCapteur();
     void litTimeoutWiFi();
@@ -61,6 +63,27 @@ private slots:
     void litSSID();
     void ecritSSID();
     void reinitCapteur();
+
+    void litIpDisplay();
+    void litBroadcastDisplay();
+    void ecritBroadcastDisplay();
+    void litUdpPortDisplay();
+    void ecritUdpPortDisplay();
+    void litUdpPortSecDisplay();
+    void ecritUdpPortSecDisplay();
+    void litTimeoutWiFiDisplay();
+    void ecritTimeoutWiFiDisplay();
+    void shutdownDisplay();
+    void displayChangeScale();
+    void displayGetScale();
+    void refreshDisplay();
+    void litPeriodeDisplay();
+    void ecritPeriodeDisplay();
+    void litRecordRatio();
+    void ecritRecordRatio();
+    void litTypeGrf();
+    void ecritTypeGrf();
+
     void findPression(double dPress);
     void findTemperature(double dTemp);
 
@@ -70,8 +93,9 @@ private:
     Ui::MainWindow *ui;
 
     SensorDialog* mSensor;
-    SensorDialog::ConnexionType mTypeConnec;
-    QString mPortName;
+    SensorDialog* mDisplay;
+    //SensorDialog::ConnexionType mTypeConnec;
+   // QString mPortName;
     QString mTrameEnCours;
     QString mTrameEntiere;
     int mDuree; //heure

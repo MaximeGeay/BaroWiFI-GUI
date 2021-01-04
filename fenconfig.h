@@ -10,10 +10,10 @@ class fenConfig;
 }
 
 
-
 class fenConfig : public QWidget
 {
     Q_OBJECT
+
 
 public:
     explicit fenConfig(QWidget *parent = nullptr);
@@ -28,6 +28,7 @@ public slots:
 
 
     void showFen(bool bIsRunning);
+    QList<SensorDialog*> getSensors();
 
 
 private slots:
@@ -39,21 +40,18 @@ private slots:
 
 private:
     Ui::fenConfig *ui;
-    QString mPortName;
-    QString mBaudrate;
-    bool mConnec;
+
     bool bConfChanged;
-    QString mIpSensor;
-    int mPortUDP;
 
-
+    SensorDialog* mSensor;
+    SensorDialog* mDisplay;
     int mNbFiles;
     QString mRepArchi;
 
     bool mIsRunning;
     bool initRepArchi(QString sRep);
     void initFen();
-    void selConnecType(SensorDialog::ConnexionType);
+
     int mRatio;
 
 };
