@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-#define version "Barographe 1.0.5"
+#define version "Barographe 1.0.6"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -649,7 +649,7 @@ void MainWindow::litPeriodeDisplay()
 
 void MainWindow::ecritPeriodeDisplay()
 {
-    QString sMsg=QString("$BARODISPLAY,setPeriod,%1\n").arg(ui->sp_ScreenPeriod->value()*60); //conversion en seconde
+    QString sMsg=QString("$BARODISPLAY,setPeriod,%1,\n").arg(ui->sp_ScreenPeriod->value()*60); //conversion en seconde
     mDisplay->sendMessage(sMsg);
 }
 
